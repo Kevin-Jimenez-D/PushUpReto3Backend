@@ -108,12 +108,76 @@ CREATE TABLE prenda(
 );
 
 CREATE TABLE inventario (
-    
+    Id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    CodInv VARCHAR(255) NOT NULL,
+    IdPrendaFk INT(11) NOT NULL,
+    ValorVtaCop DOUBLE NOT NULL,
+    ValorVtaUsd DOUBLE NOT NULL
+);
+
+CREATE TABLE detalle_venta (
+    Id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    IdVentaFk INT(11) NOT NULL,
+    IdProductoFk INT(11) NOT NULL,
+    IdTallaFk INT(11) NOT NULL,
+    cantidad INT(11) NOT NULL,
+    valor_unit DOUBLE NOT NULL
+);
+
+CREATE TABLE orden (
+    Id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    IdEmpleadoFk INT(11) NOT NULL,
+    IdClienteFk INT(11) NOT NULL,
+    IdEstadoFk INT(11) NOT NULL
+);
+
+CREATE TABLE detalle_orden(
+    Id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    IdOrdenFk INT(11) NOT NULL,
+    IdPrendaFk INT(11) NOT NULL,
+    PrendaId INT(11) NOT NULL,
+    cantidad_producir INT(11) NOT NULL,
+    IdColorFk INT(11) NOT NULL,
+    cantidad_producida INT(11) NOT NULL,
+    IdEstadoFk INT(11) NOT NULL
+);
+
+CREATE TABLE empresa(
+    Id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nit VARCHAR(50) NOT NULL,
+    razon_social TEXT NOT NULL,
+    representante_legal VARCHAR(50) NOT NULL,
+    FechaCreacion DATE NOT NULL,
+    IdMunicipioFk INT(11) NOT NULL
 );
 
 CREATE TABLE insumo_prendas (
-    IdInsumoFk INT(11),
-    IdPrendaFk INT(11),
-    Cantidad INT(11)
+    IdInsumoFk INT(11) NOT NULL,
+    IdPrendaFk INT(11) NOT NULL,
+    Cantidad INT(11) NOT NULL,
+    PRIMARY KEY (IdInsumoFk, IdPrendaFk)
+);
+
+CREATE TABLE inventario_talla(
+    IdInvFk INT(11) NOT NULL,
+    IdTallaFk INT(11) NOT NULL,
+    PRIMARY KEY (IdInvFk, IdTallaFk)
+);
+
+---No se si esta bien---
+CREATE TABLE proveedor(
+    Id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    NitProveedor VARCHAR(50) NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    IdTipoPersona INT(11) NOT NULL,
+    IdMunicipioFk INT(11) NOT NULL,
+    PRIMARY KEY(NitProveedor)
+);
+
+CREATE TABLE insumo_proveedor(
+    IdInsumoFk INT(11) NOT NULL,
+    IdProveedorFk INT(11) NOT NULL,
+    PRIMARY KEY (IdInsumoFk, IdProveedorFk)
 );
 
