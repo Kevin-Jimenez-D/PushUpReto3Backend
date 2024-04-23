@@ -181,3 +181,69 @@ CREATE TABLE insumo_proveedor(
     PRIMARY KEY (IdInsumoFk, IdProveedorFk)
 );
 
+---Desde aca seran las llaves foraneas
+ALTER TABLE departamento
+ADD FOREIGN KEY (IdPaisFk) REFERENCES pais(Id);
+
+ALTER TABLE municipio
+ADD FOREIGN KEY (IdDepartamentoFk) REFERENCES departamento(Id);
+
+ALTER TABLE estado
+ADD FOREIGN KEY (IdTipoEstadoFk) REFERENCES tipo_estado(Id);
+
+ALTER TABLE cliente
+ADD FOREIGN KEY (IdTipoPersonaFk) REFERENCES tipo_persona(Id),
+ADD FOREIGN KEY (IdMunicipioFk) REFERENCES municipio(Id);
+
+ALTER TABLE empleado
+ADD FOREIGN KEY (IdCargoFk) REFERENCES cargos(Id),
+ADD FOREIGN KEY (IdMunicipioFk) REFERENCES municipio(Id);
+
+ALTER TABLE venta
+ADD FOREIGN KEY (IdEmpleadoFk) REFERENCES empleado(Id),
+ADD FOREIGN KEY (IdClienteFk) REFERENCES cliente(Id),
+ADD FOREIGN KEY (IdFormaPagoFk) REFERENCES forma_pago(Id);
+
+ALTER TABLE prenda
+ADD FOREIGN KEY (IdEstadoFk) REFERENCES estado(Id),
+ADD FOREIGN KEY (IdTipoProteccion) REFERENCES tipo_proteccion(Id),
+ADD FOREIGN KEY (IdGeneroFk) REFERENCES genero(Id);
+
+ALTER TABLE inventario
+ADD FOREIGN KEY (IdPrendaFk) REFERENCES prenda(Id);
+
+ALTER TABLE detalle_venta
+ADD FOREIGN KEY (IdVentaFk) REFERENCES venta(Id),
+ADD FOREIGN KEY (IdProductoFk) REFERENCES inventario(Id),
+ADD FOREIGN KEY (IdTallaFk) REFERENCES talla(Id);
+
+ALTER TABLE orden
+ADD FOREIGN KEY (IdEmpleadoFk) REFERENCES empleado(Id),
+ADD FOREIGN KEY (IdClienteFk) REFERENCES cliente(Id),
+ADD FOREIGN KEY (IdEstadoFk) REFERENCES estado(Id);
+
+---Un error en la base de datos, replicados PrendaId
+ALTER TABLE detalle_orden
+ADD FOREIGN KEY (IdOrdenFk) REFERENCES orden(Id),
+ADD FOREIGN KEY (IdPrendaFk) REFERENCES prenda(Id),
+ADD FOREIGN KEY (IdColorFk) REFERENCES color(Id),
+ADD FOREIGN KEY (IdEstadoFk) REFERENCES estado(Id);
+
+ALTER TABLE empresa
+ADD FOREIGN KEY (IdMunicipioFk) REFERENCES municipio(Id);
+
+ALTER TABLE insumo_prendas
+ADD FOREIGN KEY (IdInsumoFk) REFERENCES insumo(Id),
+ADD FOREIGN KEY (IdPrendaFk) REFERENCES prenda(Id);
+
+ALTER TABLE inventario_talla
+ADD FOREIGN KEY (IdInvFk) REFERENCES inventario(Id),
+ADD FOREIGN KEY (IdTallaFk) REFERENCES talla(Id);
+
+ALTER TABLE proveedor
+ADD FOREIGN KEY (IdMunicipioFk) REFERENCES municipio(Id),
+ADD FOREIGN KEY (IdTipoPersona) REFERENCES tipo_persona(Id);
+
+ALTER TABLE insumo_proveedor
+ADD FOREIGN KEY (IdInsumoFk) REFERENCES insumo(Id),
+ADD FOREIGN KEY (IdProveedorFk) REFERENCES proveedor(Id);
